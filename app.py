@@ -1,4 +1,3 @@
-
 # app.py
 import os
 import json
@@ -192,7 +191,7 @@ if st.button("Generer la/les recette(s)"):
             st.stop()
 
         for idx, rec in enumerate(data, 1):
-            with st.container(border=True):
+            with st.container():
                 st.subheader(f"Recette {idx} — {rec.get('titre', 'Sans titre')}")
                 st.caption(f"Temps {rec.get('temps_total','?')} • Portions {rec.get('portions', portions)}")
 
@@ -214,7 +213,7 @@ if st.button("Generer la/les recette(s)"):
                 if missing:
                     st.warning("Ingredients saisis non retrouves explicitement : " + ", ".join(missing))
 
-                # Export Markdown - parenthèses et virgules vérifiées
+                # Export Markdown
                 md = [
                     f"# {rec.get('titre','Recette')}",
                     f"_Temps : {rec.get('temps_total','?')} • Portions : {rec.get('portions', portions)}_",
@@ -242,5 +241,7 @@ if st.button("Generer la/les recette(s)"):
 # Bandeau bas
 st.divider()
 if not OPENAI_API_KEY:
-    st.caption("Mode demo : aucune    st.caption("Mode demo : aucune cle OpenAI detectee -> generation hors-ligne simplifiee.")
+    st.caption("Mode demo : aucune")
+    st.caption("Mode demo : aucune cle OpenAI detectee -> generation hors-ligne simplifiee.")
 else:
+    st.caption("Mode OpenAI actif")
