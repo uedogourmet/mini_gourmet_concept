@@ -214,6 +214,7 @@ if st.button("Generer la/les recette(s)"):
                 if missing:
                     st.warning("Ingredients saisis non retrouves explicitement : " + ", ".join(missing))
 
+                # Export Markdown - parenthèses et virgules vérifiées
                 md = [
                     f"# {rec.get('titre','Recette')}",
                     f"_Temps : {rec.get('temps_total','?')} • Portions : {rec.get('portions', portions)}_",
@@ -227,3 +228,19 @@ if st.button("Generer la/les recette(s)"):
                 st.download_button(
                     label="Telecharger (.md)",
                     data="\n".join(md),
+                    file_name=f"mini_gourmet_recette_{idx}.md",
+                    mime="text/markdown",
+                    use_container_width=True
+                )
+
+        if usage:
+            prompt_t = getattr(usage, "prompt_tokens", None)
+            comp_t = getattr(usage, "completion_tokens", None)
+            total_t = getattr(usage, "total_tokens", None)
+            st.info(f"Usage tokens — prompt: {prompt_t}, completion: {comp_t}, total: {total_t}")
+
+# Bandeau bas
+st.divider()
+if not OPENAI_API_KEY:
+    st.caption("Mode demo : aucune    st.caption("Mode demo : aucune cle OpenAI detectee -> generation hors-ligne simplifiee.")
+else:
